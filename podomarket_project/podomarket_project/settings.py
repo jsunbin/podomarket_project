@@ -140,6 +140,14 @@ LOGIN_REDIRECT_URL = "index"
 
 ACCOUNT_LOGOUT_ON_GET = True
 
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_USERNAME_REQUIRED = False
+
+ACCOUNT_SESSION_REMEMBER = True
+
 
 # Email settings
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
