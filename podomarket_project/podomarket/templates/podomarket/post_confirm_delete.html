@@ -8,7 +8,7 @@
   <span>정말 게시글을 삭제하시겠습니까?</span>
   <div class="buttons">
     <button class="podo-button darkpurple" type="submit">삭제</button>
-    <a class="podo-button darkgray" href="{% url "post_detail" post.id%}">취소</a>
+    <a class="podo-button darkgray" href="{% url 'post-detail' post.id%}">취소</a>
   </div>
 </form>
 {% endblock content %}

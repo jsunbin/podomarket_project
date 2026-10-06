@@ -7,16 +7,16 @@ from .forms import PostForm
 
 class IndexView(ListView):
     model = Post
-    template_name = 'podomarket/index.html'
-    context_object_name = 'posts'
+    template_name = "podomarket/index.html"
+    context_object_name = "posts"
     paginate_by = 8
-    ordering = ['-dt_updated']
+    ordering = ["-dt_updated"]
 
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'podomarket/post_detail.html'
-    pk_url_kwarg = 'post_id'
+    template_name = "podomarket/post_detail.html"
+    pk_url_kwarg = "post_id"
 
 
 class PostCreateView(CreateView):
@@ -29,7 +29,7 @@ class PostCreateView(CreateView):
         return super().form_valid(form)    
 
     def get_success_url(self) -> str:
-        return reverse('post_detail', kwargs={'post_id': self.object.id})
+        return reverse("post-detail", kwargs={"post_id": self.object.id})
 
 
 class PostUpdateView(UpdateView):
@@ -39,7 +39,7 @@ class PostUpdateView(UpdateView):
     pk_url_kwarg = "post_id"
 
     def get_success_url(self) -> str:
-        return reverse('post_detail', kwargs={'post_id': self.object.id})
+        return reverse("post-detail", kwargs={"post_id": self.object.id})
 
 
 class PostDeleteView(DeleteView):
@@ -48,10 +48,10 @@ class PostDeleteView(DeleteView):
     pk_url_kwarg = "post_id"
 
     def get_success_url(self):
-        return reverse('index')
+        return reverse("index")
 
 
 
 class CustomPasswordChangeView(PasswordChangeView):
     def get_success_url(self):
-        return reverse('index')
+        return reverse("index")
