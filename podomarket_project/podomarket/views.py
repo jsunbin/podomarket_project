@@ -1,5 +1,5 @@
 from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from allauth.account.views import PasswordChangeView
 from .models import Post
 from .forms import PostForm
@@ -40,7 +40,17 @@ class PostUpdateView(UpdateView):
 
     def get_success_url(self) -> str:
         return reverse('post_detail', kwargs={'post_id': self.object.id})
-        
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = "podomarket/post_confirm_delete.html"
+    pk_url_kwarg = "post_id"
+
+    def get_success_url(self):
+        return reverse('index')
+
+
 
 class CustomPasswordChangeView(PasswordChangeView):
     def get_success_url(self):
