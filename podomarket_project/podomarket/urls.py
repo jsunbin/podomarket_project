@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('posts/<int:post_id>', views.PostDetailView.as_view(), name='post_detail'),
     path('posts/new', views.PostCreateView.as_view(), name='post-create'),
+    path('posts/<int:post_id>/edit', views.PostUpdateView.as_view(), name='post-update'),
 ]
