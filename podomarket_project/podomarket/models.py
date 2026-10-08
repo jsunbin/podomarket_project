@@ -39,6 +39,7 @@ class Post(models.Model):
             ("하", "하"),
     ]
     item_condition = models.CharField(max_length=10, choices=CONDITION_CHOICES, default=None)
+    is_sold = models.BooleanField(default=False)
     item_details = models.TextField(blank=True)
     image1 = models.ImageField(upload_to="item_pics")
     image2 = models.ImageField(upload_to="item_pics", blank=True)

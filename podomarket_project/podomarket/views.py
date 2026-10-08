@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from allauth.account.views import PasswordChangeView
 from .models import Post
-from .forms import PostForm
+from .forms import PostCreateForm, PostUpdateForm
 
 
 class IndexView(ListView):
@@ -21,7 +21,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
-    form_class = PostForm
+    form_class = PostCreateForm
     template_name = "podomarket/post_form.html"
 
     def form_valid(self, form):
@@ -34,7 +34,7 @@ class PostCreateView(CreateView):
 
 class PostUpdateView(UpdateView):
     model = Post
-    form_class = PostForm
+    form_class = PostUpdateForm
     template_name = "podomarket/post_form.html"
     pk_url_kwarg = "post_id"
 
