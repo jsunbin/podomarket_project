@@ -1,8 +1,11 @@
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from braces.views import LoginRequiredMixin, UserPassesTestMixin
+from allauth.account.models import EmailAddress
 from allauth.account.views import PasswordChangeView
 from .models import Post
 from .forms import PostCreateForm, PostUpdateForm
+from .functions import confirmation_required_redirect
 
 
 class IndexView(ListView):
@@ -19,14 +22,24 @@ class PostDetailView(DetailView):
     pk_url_kwarg = "post_id"
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     form_class = PostCreateForm
     template_name = "podomarket/post_form.html"
 
+    # 이메일 인증 여부 검사
+    def test_func(self, user):
+        return EmailAddress.objects.filter(user=self.request.user, verified=True).exists()
+
+    # 권한을 만족하지 못했을 때 처리
+    def handle_no_permission(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return super().handle_no_permission(*args, **kwargs)
+        return confirmation_required_redirect(self.request)
+
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)    
+        return super().form_valid(form) 
 
     def get_success_url(self) -> str:
         return reverse("post-detail", kwargs={"post_id": self.object.id})
